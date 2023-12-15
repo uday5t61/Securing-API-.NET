@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
-            _logger = logger;
+            _logger = logger;            
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
