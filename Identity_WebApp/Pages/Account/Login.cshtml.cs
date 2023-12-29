@@ -32,6 +32,16 @@ namespace Identity_WebApp.Pages.Accounts
             }
             else
             {
+                if (result.RequiresTwoFactor)
+                {
+                    return RedirectToPage("/Account/LoginTwoFactor",
+                        new
+                        {
+                            UserName = this.Credentials.UserName,
+                            RememberMe = Credentials.RememberMe
+
+                        });
+                }
                 if(result.IsLockedOut)
                 {
                     ModelState.AddModelError("Login", "You are locked out");
