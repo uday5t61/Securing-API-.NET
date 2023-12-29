@@ -7,6 +7,6 @@ namespace WebApp_UnderTheHood.Models
         [JsonProperty("access_token")]
         public string AccessToken { get; set; } = string.Empty;
         [JsonProperty("expires_at")]
-        public string ExpiresAt { get; set; }
+        public DateTime ExpiresAt { get; set; }
     }
 }
