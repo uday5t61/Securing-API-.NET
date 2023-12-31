@@ -46,11 +46,11 @@ namespace Identity_WebApp.Pages.Account
             {
                 if (result.IsLockedOut)
                 {
-                    ModelState.AddModelError("Login", "You are locked out");
+                    ModelState.AddModelError("Login2FA", "You are locked out");
                 }
                 else
                 {
-                    ModelState.AddModelError("Login", "Failed to Login");
+                    ModelState.AddModelError("Login2FA", "Failed to Login");
                 }
             }
             return Page();

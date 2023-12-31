@@ -34,13 +34,21 @@ namespace Identity_WebApp.Pages.Accounts
             {
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToPage("/Account/LoginTwoFactor",
-                        new
-                        {
-                            UserName = this.Credentials.UserName,
-                            RememberMe = Credentials.RememberMe
+                    //return RedirectToPage("/Account/LoginTwoFactor",
+                    //    new
+                    //    {
+                    //        UserName = this.Credentials.UserName,
+                    //        RememberMe = Credentials.RememberMe
 
-                        });
+                    //    });
+
+                    return RedirectToPage("/Account/LoginTwoFactorWithAuthenticator",
+                     new
+                     {
+                         RememberMe = Credentials.RememberMe
+
+                     });
+                    
                 }
                 if(result.IsLockedOut)
                 {

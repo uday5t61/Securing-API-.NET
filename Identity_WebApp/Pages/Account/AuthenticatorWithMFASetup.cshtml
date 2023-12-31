@@ -2,4 +2,49 @@
 @model Identity_WebApp.Pages.Account.AuthenticatorWithMFASetupModel
 @{
 }
-<p><h3>MFA Key : @Model.KeyViewmodel.Key</h3></p>
+<h3>Step: 1</h3>
+<p>Please enter key to your authenticator app:</p>
+<p>@Model.KeyViewModel.Key</p>
+<br/>
+<h3>Step: 2</h3>
+@* <p>Please enter security code from your authenticator app:</p> *@
+
+<p>Please scan the QR code or enter key to your authenticator app:</p>
+
+<p>
+    @if (Model.KeyViewModel.QRCodeBytes != null)
+    {
+        <img src="@string.Format("data:image/png;base64,{0}",Convert.ToBase64String(Model.KeyViewModel.QRCodeBytes))"
+             width="300"
+             height="300" />
+    }   
+</p>
+<form method="post">
+    @if (Model.Succeeded)
+    {
+        <div class="alert alert-success">
+            The Authenticator is successfully setup.
+        </div>
+    }
+    <div class="text-danger" asp-validation-summary="All"></div>
+    <div class="mb-3 row">
+        <div class="col-2">
+            <label asp-for="KeyViewModel.SecurityCode"></label>
+        </div>
+        <div class="col-5">
+            <input type="text" asp-for="KeyViewModel.SecurityCode" class="form-control" />
+            <span class="text-danger" asp-validation-for="KeyViewModel.SecurityCode"></span>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <div class="col-2">
+            <input type="submit" class="btn btn-primary" value="Verify" />
+        </div>
+        <div class="col">
+            <input type="hidden" asp-for="KeyViewModel.Key" />
+            <input type="hidden" asp-for="KeyViewModel.QRCodeBytes" />
+
+        </div>
+    </div>
+</form>
