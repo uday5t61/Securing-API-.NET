@@ -8,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+//added when fb authentication is used
+builder.Services.AddControllers();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
@@ -36,6 +39,12 @@ builder.Services.ConfigureApplicationCookie(options =>
    // options.accessdeniedpath = "account/accessdenied";
 });
 
+builder.Services.AddAuthentication().AddFacebook(options =>
+{
+    options.AppId = builder.Configuration["FacebookAppId"] ?? string.Empty;
+    options.AppSecret = builder.Configuration["FacebookAppSecret"] ?? string.Empty;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -54,5 +63,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+//added when fb authentication is used
+app.MapControllers();
 
 app.Run();

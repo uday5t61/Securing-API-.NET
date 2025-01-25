@@ -18,8 +18,12 @@ namespace Identity_WebApp.Pages.Accounts
         }
         [BindProperty]
         public Credentials Credentials { get; set; } = new Credentials();
-        public void OnGet()
-        {
+
+        [BindProperty]
+        public IEnumerable<AuthenticationScheme> ExternalLoginProviders { get; set; }
+        public async Task OnGetAsync()
+        {            
+            ExternalLoginProviders = await _signInManager.GetExternalAuthenticationSchemesAsync();
         }
         public async Task<IActionResult> OnPostAsync()
         {
@@ -60,6 +64,17 @@ namespace Identity_WebApp.Pages.Accounts
                 }
             }
             return Page();
+        }
+
+        public IActionResult OnPostLoginExternally(string provider) 
+        {
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(
+                provider,
+                null);
+
+            properties.RedirectUri = Url.Action("ExternalLoginCallback", "Account");
+
+            return Challenge(properties,provider);
         }
     }
 }
